@@ -2,6 +2,7 @@
 using Serilog.Sinks.Elasticsearch;
 using Serilog;
 using Microsoft.Extensions.Configuration;
+using BuildingBlocks.Common.Logging;
 
 namespace BuildingBlocks.SeriLog
 {
@@ -18,7 +19,7 @@ namespace BuildingBlocks.SeriLog
                     .WriteTo.Debug()
                     .WriteTo.Console()
                     .WriteTo.Elasticsearch(
-                        new ElasticsearchSinkOptions(new Uri(elasticUri))
+                        new ElasticsearchSinkOptions(new Uri(context.Configuration["ElasticConfiguration:Uri"]))
                         {
                             IndexFormat = $"applogs-{context.HostingEnvironment.ApplicationName?.ToLower().Replace(".", "-")}-{context.HostingEnvironment.EnvironmentName?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}",
                             AutoRegisterTemplate = true,
@@ -27,7 +28,7 @@ namespace BuildingBlocks.SeriLog
                         })
                     .Enrich.WithProperty("Environment", context.HostingEnvironment.EnvironmentName)
                     .Enrich.WithProperty("Application", context.HostingEnvironment.ApplicationName)
-                    //.Enrich.With<LogEnricher>()
+                    .Enrich.With<LogEnricher>()
                     .ReadFrom.Configuration(context.Configuration);
            };
     }

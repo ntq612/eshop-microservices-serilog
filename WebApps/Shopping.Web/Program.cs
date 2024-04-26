@@ -1,25 +1,29 @@
+
+
+using BuildingBlocks.Common.Logging;
+using BuildingBlocks.SeriLog;
 using Serilog;
 
-Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console()
-    .CreateLogger();
-Log.Information("starting server.");
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.UseSerilog((context, loggerConfiguration) =>
+/// Config SeriLog
+builder.Logging.Configure(options =>
 {
-    loggerConfiguration.WriteTo.Console();
-    loggerConfiguration.ReadFrom.Configuration(context.Configuration);
+    options.ActivityTrackingOptions = ActivityTrackingOptions.TraceId | ActivityTrackingOptions.SpanId;
 });
+
+builder.Host.UseSerilog(SeriLogger.Configure);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddTransient<LoggingDelegatingHandler>();
 
 builder.Services.AddRefitClient<ICatalogService>()
     .ConfigureHttpClient(c =>
     {
         c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!);
-    });
+    }).AddHttpMessageHandler<LoggingDelegatingHandler>();
 builder.Services.AddRefitClient<IBasketService>()
     .ConfigureHttpClient(c =>
     {
