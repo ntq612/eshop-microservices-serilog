@@ -14,10 +14,10 @@ builder.Logging.Configure(options =>
 
 builder.Host.UseSerilog(SeriLogger.Configure);
 
+builder.Services.AddTransient<LoggingDelegatingHandler>();
+
 // Add services to the container.
 builder.Services.AddRazorPages();
-
-builder.Services.AddTransient<LoggingDelegatingHandler>();
 
 builder.Services.AddRefitClient<ICatalogService>()
     .ConfigureHttpClient(c =>
@@ -28,12 +28,12 @@ builder.Services.AddRefitClient<IBasketService>()
     .ConfigureHttpClient(c =>
     {
         c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!);
-    });
+    }).AddHttpMessageHandler<LoggingDelegatingHandler>();
 builder.Services.AddRefitClient<IOrderingService>()
     .ConfigureHttpClient(c =>
     {
         c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!);
-    });
+    }).AddHttpMessageHandler<LoggingDelegatingHandler>();
 
 var app = builder.Build();
 

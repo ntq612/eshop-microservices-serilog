@@ -2,8 +2,18 @@ using Discount.Grpc;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using BuildingBlocks.Messaging.MassTransit;
+using Serilog;
+using BuildingBlocks.SeriLog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+/// Config SeriLog
+builder.Logging.Configure(options =>
+{
+    options.ActivityTrackingOptions = ActivityTrackingOptions.TraceId | ActivityTrackingOptions.SpanId;
+});
+
+builder.Host.UseSerilog(SeriLogger.Configure);
 
 // Add services to the container.
 

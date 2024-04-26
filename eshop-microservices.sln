@@ -14,6 +14,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildingBlocks", "BuildingBlocks\BuildingBlocks\BuildingBlocks.csproj", "{BDC2CC46-602A-4FC3-AF32-C13E632EC174}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{6DCBEC70-4866-4297-9AD0-73928CCFA987}"
+	ProjectSection(ProjectDependencies) = postProject
+		{48A121C5-8AD7-49F1-89C5-C676A4210482} = {48A121C5-8AD7-49F1-89C5-C676A4210482}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basket", "Basket", "{A067C785-233F-4139-8B82-A8989520FBEB}"
 EndProject
@@ -42,6 +45,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApps", "WebApps", "{E7460A59-FF52-45DA-8863-55B4DDB0C352}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Web", "WebApps\Shopping.Web\Shopping.Web.csproj", "{C9D524EB-B6E2-4FCD-9EF8-3231CDDBB590}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Logging", "BuildingBlocks\Common.Logging\Common.Logging\Common.Logging.csproj", "{48A121C5-8AD7-49F1-89C5-C676A4210482}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,6 +102,10 @@ Global
 		{C9D524EB-B6E2-4FCD-9EF8-3231CDDBB590}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9D524EB-B6E2-4FCD-9EF8-3231CDDBB590}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9D524EB-B6E2-4FCD-9EF8-3231CDDBB590}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48A121C5-8AD7-49F1-89C5-C676A4210482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48A121C5-8AD7-49F1-89C5-C676A4210482}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48A121C5-8AD7-49F1-89C5-C676A4210482}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48A121C5-8AD7-49F1-89C5-C676A4210482}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,6 +126,7 @@ Global
 		{2882CF69-C0B4-4751-9ED2-0D2370528EF9} = {0CB8C063-EE8E-46F7-B20B-A68C529DEF82}
 		{4FD3AA13-E002-4776-AF67-BE89BC142BA7} = {09A61B2A-DB2E-46C6-8A52-3566013B740F}
 		{C9D524EB-B6E2-4FCD-9EF8-3231CDDBB590} = {E7460A59-FF52-45DA-8863-55B4DDB0C352}
+		{48A121C5-8AD7-49F1-89C5-C676A4210482} = {0CB8C063-EE8E-46F7-B20B-A68C529DEF82}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4C1ECE9-A4AD-4FED-B0FC-7EA1636ACABF}
