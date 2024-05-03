@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using BuildingBlocks.Messaging.MassTransit;
 using Serilog;
 using BuildingBlocks.SeriLog;
+using BuildingBlocks.Common.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 

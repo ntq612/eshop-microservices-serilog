@@ -1,8 +1,10 @@
-
-
 using BuildingBlocks.Common.Logging;
 using BuildingBlocks.SeriLog;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Polly;
 using Serilog;
+using Shopping.Web.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,17 +25,30 @@ builder.Services.AddRefitClient<ICatalogService>()
     .ConfigureHttpClient(c =>
     {
         c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!);
-    }).AddHttpMessageHandler<LoggingDelegatingHandler>();
+    }).AddHttpMessageHandler<LoggingDelegatingHandler>()
+    .AddPolicyHandler(PollyHelper.GetRetryPolicy())
+    .AddPolicyHandler(PollyHelper.GetCircuitBreakerPolicy());
+
 builder.Services.AddRefitClient<IBasketService>()
     .ConfigureHttpClient(c =>
     {
         c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!);
-    }).AddHttpMessageHandler<LoggingDelegatingHandler>();
+    }).AddHttpMessageHandler<LoggingDelegatingHandler>()
+    .AddPolicyHandler(PollyHelper.GetRetryPolicy())
+    .AddPolicyHandler(PollyHelper.GetCircuitBreakerPolicy());
+
 builder.Services.AddRefitClient<IOrderingService>()
     .ConfigureHttpClient(c =>
     {
         c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!);
-    }).AddHttpMessageHandler<LoggingDelegatingHandler>();
+    })
+    .AddHttpMessageHandler<LoggingDelegatingHandler>()
+    .AddPolicyHandler(PollyHelper.GetRetryPolicy())
+    .AddPolicyHandler(PollyHelper.GetCircuitBreakerPolicy());
+
+// Add Health Check
+builder.Services.AddHealthChecks();
+
 
 var app = builder.Build();
 
@@ -44,6 +59,12 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseHealthChecks("/health",
+    new HealthCheckOptions
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
