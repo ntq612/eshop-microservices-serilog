@@ -7,7 +7,7 @@ public class GetProductsEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/products", async ([AsParameters] GetProductsRequest request, ISender sender) =>
+        app.MapGet("/api/v1/products", async ([AsParameters] GetProductsRequest request, ISender sender) =>
         {
             var query = request.Adapt<GetProductsQuery>();
 
@@ -17,6 +17,7 @@ public class GetProductsEndpoint : ICarterModule
 
             return Results.Ok(response);
         })
+        .RequireAuthorization("ClientIdPolicy")
         .WithName("GetProducts")
         .Produces<GetProductsResponse>(StatusCodes.Status200OK)
         .ProducesProblem(StatusCodes.Status400BadRequest)

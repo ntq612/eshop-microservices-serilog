@@ -8,7 +8,7 @@ public class GetProductByCategoryEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/products/category/{category}", 
+        app.MapGet("/api/v1/products/category/{category}", 
             async (string category, ISender sender) =>
         {
             var result = await sender.Send(new GetProductByCategoryQuery(category));
@@ -17,6 +17,7 @@ public class GetProductByCategoryEndpoint : ICarterModule
             
             return Results.Ok(response);
         })
+        .RequireAuthorization()
         .WithName("GetProductByCategory")
         .Produces<GetProductByCategoryResponse>(StatusCodes.Status200OK)
         .ProducesProblem(StatusCodes.Status400BadRequest)

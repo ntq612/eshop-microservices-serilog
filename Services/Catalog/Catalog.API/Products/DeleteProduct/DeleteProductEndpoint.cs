@@ -8,7 +8,7 @@ public class DeleteProductEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapDelete("/products/{id}", async (Guid id, ISender sender) =>
+        app.MapDelete("/api/v1/products/{id}", async (Guid id, ISender sender) =>
         {
             var result = await sender.Send(new DeleteProductCommand(id));
 
@@ -16,6 +16,7 @@ public class DeleteProductEndpoint : ICarterModule
 
             return Results.Ok(response);
         })
+        .RequireAuthorization()
         .WithName("DeleteProduct")
         .Produces<DeleteProductResponse>(StatusCodes.Status200OK)
         .ProducesProblem(StatusCodes.Status400BadRequest)

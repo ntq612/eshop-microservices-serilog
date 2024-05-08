@@ -4,11 +4,10 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using BuildingBlocks.Messaging.MassTransit;
 using Serilog;
 using BuildingBlocks.SeriLog;
-using BuildingBlocks.Common.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
-/// Config SeriLog
+// Config SeriLog
 builder.Logging.Configure(options =>
 {
     options.ActivityTrackingOptions = ActivityTrackingOptions.TraceId | ActivityTrackingOptions.SpanId;
@@ -66,6 +65,7 @@ builder.Services.AddMessageBroker(builder.Configuration);
 //Cross-Cutting Services
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
+//Healcheck Service
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
     .AddRedis(builder.Configuration.GetConnectionString("Redis")!);

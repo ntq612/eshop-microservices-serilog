@@ -8,7 +8,7 @@ public class CreateProductEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/products",
+        app.MapPost("/api/v1/products",
             async (CreateProductRequest request, ISender sender) =>
         {
             var command = request.Adapt<CreateProductCommand>();
@@ -20,12 +20,11 @@ public class CreateProductEndpoint : ICarterModule
             return Results.Created($"/products/{response.Id}", response);
 
         })
+        .RequireAuthorization()
         .WithName("CreateProduct")
         .Produces<CreateProductResponse>(StatusCodes.Status201Created)
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .WithSummary("Create Product")
         .WithDescription("Create Product");
     }
-
-
 }
