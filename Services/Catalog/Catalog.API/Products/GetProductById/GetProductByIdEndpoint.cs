@@ -16,7 +16,7 @@ public class GetProductByIdEndpoint : ICarterModule
 
             return Results.Ok(response);
         })
-        .RequireAuthorization()
+       // .RequireAuthorization()
         .WithName("GetProductById")
         .Produces<GetProductByIdResponse>(StatusCodes.Status200OK)
         .ProducesProblem(StatusCodes.Status400BadRequest)

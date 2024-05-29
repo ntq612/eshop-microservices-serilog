@@ -51,7 +51,12 @@ namespace IdentityServer
                     AllowedScopes = new List<string>()
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Address,
+                        IdentityServerConstants.StandardScopes.Email,
+                        "catalogAPI",
+                        "basketAPI",
+                        "roles"
                     }
                 }
             };
@@ -72,7 +77,13 @@ namespace IdentityServer
             new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                new IdentityResources.Address(),
+                new IdentityResources.Email(),
+                new IdentityResource(
+                    "roles",
+                    "Your role(s)",
+                    new List<string>() { "role" })
             };
 
         public static List<TestUser> TestUsers =>
@@ -86,7 +97,8 @@ namespace IdentityServer
                     Claims = new List<Claim>
                     {
                         new Claim(JwtClaimTypes.GivenName, "trongquy"),
-                        new Claim(JwtClaimTypes.FamilyName, "nguyen")
+                        new Claim(JwtClaimTypes.FamilyName, "nguyen"),
+                        new Claim(JwtClaimTypes.Role, "Admin")
                     }
                 }
             };

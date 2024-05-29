@@ -1,14 +1,18 @@
 using IdentityServer;
-using IdentityServer4.Models;
-using IdentityServer4.Test;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequiredAdmin", policy => policy.RequireClaim("Admin"));
+    //options.AddPolicy("");
+});
+
 builder.Services.AddIdentityServer()
                 .AddInMemoryClients(Config.Clients)
-                .AddInMemoryIdentityResources(Config.IdentityResources) 
+                .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiResources(Config.ApiResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddTestUsers(Config.TestUsers)

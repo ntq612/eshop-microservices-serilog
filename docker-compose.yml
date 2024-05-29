@@ -64,6 +64,12 @@ services:
       context: .
       dockerfile: WebApps/WebStatus/Dockerfile
 
+  identityServer4:
+    image: ${DOCKER_REGISTRY-}webstatus
+    build: 
+      context: .
+      dockerfile: IdentityServer/IdentityServer/Dockerfile
+
 volumes:
   postgres_catalog:
   postgres_basket:

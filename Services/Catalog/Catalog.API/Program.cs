@@ -20,6 +20,7 @@ builder.Services.AddAuthentication("Bearer")
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("ClientIdPolicy", policy => policy.RequireClaim("client_id", "catalogClient"));
+    options.AddPolicy("RequiredAdmin", policy => policy.RequireClaim("Admin"));
 });
 // Config SeriLog
 builder.Logging.Configure(options =>
@@ -73,3 +74,5 @@ app.UseHealthChecks("/health",
     });
 
 app.Run();
+
+public partial class Program { }
