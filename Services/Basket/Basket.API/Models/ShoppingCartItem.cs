@@ -7,4 +7,13 @@ public class ShoppingCartItem
     public decimal Price { get; set; } = default!;
     public Guid ProductId { get; set; } = default!;
     public string ProductName { get; set; } = default!;
+
+    public ShoppingCartItem(Guid productId, int quantity, string color, decimal price, string productName)
+    {
+        this.ProductId = productId;
+        this.Quantity = quantity;
+        this.Color = color;
+        this.Price = price;
+        this.ProductName = productName;
+    }
 }

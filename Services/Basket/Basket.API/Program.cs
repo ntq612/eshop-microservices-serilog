@@ -82,3 +82,5 @@ app.UseHealthChecks("/health",
     });
 
 app.Run();
+
+public partial class Program { }

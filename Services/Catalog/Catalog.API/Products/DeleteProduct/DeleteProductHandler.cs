@@ -1,5 +1,4 @@
-﻿
-namespace Catalog.API.Products.DeleteProduct;
+﻿namespace Catalog.API.Products.DeleteProduct;
 
 public record DeleteProductCommand(Guid Id) : ICommand<DeleteProductResult>;
 public record DeleteProductResult(bool IsSuccess);
@@ -12,7 +11,7 @@ public class DeleteProductCommandValidator : AbstractValidator<DeleteProductComm
     }
 }
 
-internal class DeleteProductCommandHandler
+public class DeleteProductCommandHandler
     (IDocumentSession session)
     : ICommandHandler<DeleteProductCommand, DeleteProductResult>
 {
